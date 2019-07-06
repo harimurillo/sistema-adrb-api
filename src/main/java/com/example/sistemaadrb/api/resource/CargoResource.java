@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +33,7 @@ public class CargoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cargo> criar(@RequestBody Cargo cargo, HttpServletResponse response) {
+	public ResponseEntity<Cargo> criar(@Valid @RequestBody Cargo cargo, HttpServletResponse response) {
 		Cargo cargoSalvo = cargoRepository.save(cargo);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{cod}").buildAndExpand(cargoSalvo.getCod()).toUri();
