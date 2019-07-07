@@ -34,6 +34,7 @@ public class CargoResource {
 	
 	@PostMapping
 	public ResponseEntity<Cargo> criar(@Valid @RequestBody Cargo cargo, HttpServletResponse response) {
+		
 		Cargo cargoSalvo = cargoRepository.save(cargo);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{cod}").buildAndExpand(cargoSalvo.getCod()).toUri();

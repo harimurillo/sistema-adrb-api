@@ -9,33 +9,33 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "TB_CARGO")
-public class Cargo {
+@Table(name = "TB_CIDADE")
+public class Cidade {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long cod;
 	
 	@NotNull
-	@Size(min = 3, max = 50)
-	private String nomeCargo;
-	
+	@Size(min = 3, max = 100)
+	private String nomeCidade;
+
 	public Long getCod() {
 		return cod;
 	}
-	
+
 	public void setCod(Long cod) {
 		this.cod = cod;
 	}
-	
-	public String getNomeCargo() {
-		return nomeCargo;
+
+	public String getNomeCidade() {
+		return nomeCidade;
 	}
-	
-	public void setNomeCargo(String nomeCargo) {
-		this.nomeCargo = nomeCargo;
+
+	public void setNomeCidade(String nomeCidade) {
+		this.nomeCidade = nomeCidade;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,7 +43,7 @@ public class Cargo {
 		result = prime * result + ((cod == null) ? 0 : cod.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -52,7 +52,7 @@ public class Cargo {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cargo other = (Cargo) obj;
+		Cidade other = (Cidade) obj;
 		if (cod == null) {
 			if (other.cod != null)
 				return false;
