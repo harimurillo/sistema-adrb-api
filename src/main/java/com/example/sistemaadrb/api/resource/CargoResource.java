@@ -32,6 +32,14 @@ public class CargoResource {
 		return cargoRepository.findAll();
 	}
 	
+	@GetMapping("/{cod}")
+	public ResponseEntity<Cargo> buscarCargoPeloCodigo(@PathVariable Long cod) {
+		
+		Optional<Cargo> cargo = this.cargoRepository.findById(cod);
+		
+		return cargo.isPresent() ? ResponseEntity.ok(cargo.get()) : ResponseEntity.notFound().build();
+	}
+	
 	@PostMapping
 	public ResponseEntity<Cargo> criar(@Valid @RequestBody Cargo cargo, HttpServletResponse response) {
 		
@@ -42,10 +50,4 @@ public class CargoResource {
 		return ResponseEntity.created(uri).body(cargoSalvo);
 	}
 	
-	@GetMapping("/{cod}")
-	public ResponseEntity<Cargo> buscarCargoPeloCodigo(@PathVariable Long cod) {
-		Optional<Cargo> cargo = this.cargoRepository.findById(cod);
-		return cargo.isPresent() ? ResponseEntity.ok(cargo.get()) : ResponseEntity.notFound().build();
-	}
-
 }

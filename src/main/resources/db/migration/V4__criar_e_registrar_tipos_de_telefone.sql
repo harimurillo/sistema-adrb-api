@@ -1,0 +1,10 @@
+CREATE TABLE TB_TIPO_TELEFONE
+(
+	cod 	INT 		AUTO_INCREMENT,
+    tipo 	VARCHAR(20) NOT NULL,
+    CONSTRAINT pk_tb_tipo_telefone PRIMARY KEY(cod),
+    CONSTRAINT uq_tb_tipo_telefone UNIQUE(tipo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO TB_TIPO_TELEFONE (tipo) VALUES ('Celular');
+INSERT INTO TB_TIPO_TELEFONE (tipo) VALUES ('Residencial');

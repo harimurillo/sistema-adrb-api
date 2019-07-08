@@ -34,7 +34,9 @@ public class CidadeResource {
 	
 	@GetMapping("/{cod}")
 	public ResponseEntity<Cidade> buscarCidadePeloCodigo(@PathVariable Long cod) {
+		
 		Optional<Cidade> cidade = this.cidadeRepository.findById(cod);
+		
 		return cidade.isPresent() ? ResponseEntity.ok(cidade.get()) : ResponseEntity.notFound().build();
 	}
 	
