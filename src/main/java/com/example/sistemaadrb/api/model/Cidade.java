@@ -1,5 +1,6 @@
 package com.example.sistemaadrb.api.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +15,12 @@ public class Cidade {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "cod")
 	private Long cod;
 	
 	@NotNull
 	@Size(min = 3, max = 100)
+	@Column(name = "nome_cidade")
 	private String nomeCidade;
 
 	public Long getCod() {
