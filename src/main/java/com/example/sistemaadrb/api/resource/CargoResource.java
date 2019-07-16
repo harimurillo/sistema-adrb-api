@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.sistemaadrb.api.event.RecursoCriadoEvent;
 import com.example.sistemaadrb.api.model.Cargo;
 import com.example.sistemaadrb.api.repository.CargoRepository;
+import com.example.sistemaadrb.api.service.CargoService;
 
 @RestController
 @RequestMapping("/cargos")
@@ -29,6 +31,12 @@ public class CargoResource {
 	
 	@Autowired
 	private CargoRepository cargoRepository;
+	
+	@Autowired
+	private ApplicationEventPublisher publisher;
+	
+	@Autowired
+	private CargoService cargoService;
 	
 	@GetMapping
 	public List<Cargo> listar() {
@@ -42,9 +50,6 @@ public class CargoResource {
 		
 		return cargo.isPresent() ? ResponseEntity.ok(cargo.get()) : ResponseEntity.notFound().build();
 	}
-	
-	@Autowired
-	private ApplicationEventPublisher publisher;
 	
 	@PostMapping
 	public ResponseEntity<Cargo> criar(@Valid @RequestBody Cargo cargo, HttpServletResponse response) {
@@ -60,7 +65,13 @@ public class CargoResource {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cod) {
 		cargoRepository.deleteById(cod);
-		
 	}
+	
+	@PutMapping("/{cod}")
+	public ResponseEntity<Cargo> atualizar(@PathVariable Long cod, @Valid @RequestBody Cargo cargo) {
+		Cargo cargoSalvo = cargoService.atualizar(cod, cargo);
+		return ResponseEntity.ok(cargoSalvo);
+	}
+	
 	
 }

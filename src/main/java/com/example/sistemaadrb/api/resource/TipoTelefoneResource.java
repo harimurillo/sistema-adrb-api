@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.sistemaadrb.api.event.RecursoCriadoEvent;
 import com.example.sistemaadrb.api.model.TipoTelefone;
 import com.example.sistemaadrb.api.repository.TipoTelefoneRepository;
+import com.example.sistemaadrb.api.service.TipoTelefoneService;
 
 @RestController
 @RequestMapping("/tipos-telefone")
@@ -33,6 +35,9 @@ public class TipoTelefoneResource {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
+	@Autowired
+	private TipoTelefoneService tipoTelefoneService;
+	
 	@GetMapping
 	public List<TipoTelefone> listar() {
 		return tipoTelefoneRepository.findAll();
@@ -41,15 +46,15 @@ public class TipoTelefoneResource {
 	@GetMapping("/{cod}")
 	public ResponseEntity<TipoTelefone> buscarTipoTelefonePeloCodigo(@PathVariable Long cod) {
 		
-		Optional<TipoTelefone> tipoTelefone = tipoTelefoneRepository.findById(cod);
+		Optional<TipoTelefone> tipoTelefone = tipoTelefoneRepository.findById(cod);	
 		
 		return tipoTelefone.isPresent() ? ResponseEntity.ok(tipoTelefone.get()) : ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<TipoTelefone> criar(@Valid @RequestBody TipoTelefone tipoTelefone, HttpServletResponse response) {
+	public ResponseEntity<TipoTelefone> criar(@Valid @RequestBody TipoTelefone tipoTelefone, HttpServletResponse response) {	
 		
-		TipoTelefone tipoTelefoneSalvo = tipoTelefoneRepository.save(tipoTelefone);
+		TipoTelefone tipoTelefoneSalvo = tipoTelefoneRepository.save(tipoTelefone);	
 		
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, tipoTelefoneSalvo.getCod()));
 		
@@ -59,6 +64,15 @@ public class TipoTelefoneResource {
 	@DeleteMapping("/{cod}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long cod) {
+		
 		tipoTelefoneRepository.deleteById(cod);
+	}
+	
+	@PutMapping("/{cod}")
+	public ResponseEntity<TipoTelefone> atualizar(@PathVariable Long cod, @Valid @RequestBody TipoTelefone tipoTelefone) {
+		
+		TipoTelefone tipoTelefoneSalvo = tipoTelefoneService.atualizar(cod, tipoTelefone);
+		
+		return ResponseEntity.ok(tipoTelefoneSalvo);
 	}
 }
