@@ -1,6 +1,6 @@
 CREATE TABLE TB_CIDADE
 (
-	cod 		INT 		AUTO_INCREMENT,
+	cod 		BIGINT 		AUTO_INCREMENT,
     nome_cidade VARCHAR(100) NOT NULL,
     CONSTRAINT pk_tb_cidade 		PRIMARY KEY(cod),
     CONSTRAINT uq_tb_cidade_nome 	UNIQUE(nome_cidade)

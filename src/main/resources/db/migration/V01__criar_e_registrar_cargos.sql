@@ -1,6 +1,6 @@
 CREATE TABLE TB_CARGO 
 (
-	cod 		INT 		AUTO_INCREMENT,
+	cod 		BIGINT 		AUTO_INCREMENT,
     nome_cargo 	VARCHAR(100) NOT NULL,
     CONSTRAINT pk_tb_cargo 		PRIMARY KEY(cod),
     CONSTRAINT uq_tb_cargo_nome UNIQUE(nome_cargo)

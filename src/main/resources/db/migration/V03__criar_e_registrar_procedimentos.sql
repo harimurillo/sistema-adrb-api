@@ -1,6 +1,6 @@
 CREATE TABLE TB_PROCEDIMENTO
 (
-	cod 		INT 		AUTO_INCREMENT,
+	cod 		BIGINT 		AUTO_INCREMENT,
     nome_proced VARCHAR(50) NOT NULL,
     CONSTRAINT pk_tb_procedimento PRIMARY KEY(cod),
     CONSTRAINT uq_tb_procedimento UNIQUE(nome_proced)

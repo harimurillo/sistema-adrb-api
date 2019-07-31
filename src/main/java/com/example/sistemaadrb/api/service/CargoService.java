@@ -16,12 +16,16 @@ public class CargoService {
 	
 	public Cargo atualizar(Long cod, Cargo cargo) {
 		
-		Cargo cargoSalvo = this.cargoRepository.findById(cod).orElseThrow(() -> new EmptyResultDataAccessException(1));
+		Cargo cargoSalvo = buscarCargoPeloCodigo(cod);
 		
 		BeanUtils.copyProperties(cargo, cargoSalvo, "cod");
 		
 		return this.cargoRepository.save(cargoSalvo);
-		
+	}
+
+	private Cargo buscarCargoPeloCodigo(Long cod) {
+		Cargo cargoSalvo = this.cargoRepository.findById(cod).orElseThrow(() -> new EmptyResultDataAccessException(1));
+		return cargoSalvo;
 	}
 
 }
