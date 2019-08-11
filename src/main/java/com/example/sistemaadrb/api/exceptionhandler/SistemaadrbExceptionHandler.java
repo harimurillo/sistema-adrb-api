@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.example.sistemaadrb.api.exceptionhandler.excecoes.ExcecaoQuandoNaoExisteCidade;
+
 @ControllerAdvice
 public class SistemaadrbExceptionHandler extends ResponseEntityExceptionHandler {
 	
@@ -55,6 +57,16 @@ public class SistemaadrbExceptionHandler extends ResponseEntityExceptionHandler 
 		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
 
 	}
+		
+	@ExceptionHandler({ ExcecaoQuandoNaoExisteCidade.class })
+	public ResponseEntity<Object> handleMinhaExcecaoQUandoNaoTemCIdadeException(ExcecaoQuandoNaoExisteCidade ex, WebRequest request) {
+		
+		String mensagemUsuario = ex.mensagem();
+		String mensagemDesenvolvedor = ex.toString();
+		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+		return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+
+	}	
 	
 	private List<Erro> criarListaDeErros(BindingResult bindingResult) {
 		
@@ -95,8 +107,7 @@ public class SistemaadrbExceptionHandler extends ResponseEntityExceptionHandler 
 
 		public void setMensagemDesenvolvedor(String mensagemDesenvolvedor) {
 			this.mensagemDesenvolvedor = mensagemDesenvolvedor;
-		}
-		
+		}	
 	}
 
 }

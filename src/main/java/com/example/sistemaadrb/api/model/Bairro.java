@@ -25,6 +25,7 @@ public class Bairro {
 	@Column(name = "nome_bairro")
 	private String nomeBairro;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "cod_cidade")
 	private Cidade cidade;

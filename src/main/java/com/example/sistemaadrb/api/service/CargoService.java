@@ -24,8 +24,10 @@ public class CargoService {
 	}
 
 	private Cargo buscarCargoPeloCodigo(Long cod) {
-		Cargo cargoSalvo = this.cargoRepository.findById(cod).orElseThrow(() -> new EmptyResultDataAccessException(1));
-		return cargoSalvo;
+		
+		Cargo cargo = this.cargoRepository.findById(cod).orElseThrow(() -> new EmptyResultDataAccessException(1));
+		
+		return cargo;
 	}
-
+	
 }
